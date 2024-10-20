@@ -59,16 +59,16 @@ def post_json_front():
         ],
         "bbox": json_data.get('bbox', None),
         "assets": {
-            "tci": {
-                "href": json_data['assets']['tci'].get('href', None),
-                "type": json_data['assets']['tci'].get('type', None),
-                "roles": json_data['assets']['tci'].get('roles', []),  
-                "created": json_data['assets']['tci'].get('created', None),
-                "updated": json_data['assets']['tci'].get('updated', None),
-                "bdc:size": json_data['assets']['tci'].get('bdc:size', None),
-                "bdc:chunk_size": json_data['assets']['tci'].get('bdc:chunk_size', None),
-                "bdc:raster_size": json_data['assets']['tci'].get('bdc:raster_size', None),
-                "checksum:multihash": json_data['assets']['tci'].get('checksum:multihash', None)
+            "EVI": {
+                "href": json_data['assets']['EVI'].get('href', None),
+                "type": json_data['assets']['EVI'].get('type', None),
+                "roles": json_data['assets']['EVI'].get('roles', []),  
+                "created": json_data['assets']['EVI'].get('created', None),
+                "updated": json_data['assets']['EVI'].get('updated', None),
+                "bdc:size": json_data['assets']['EVI'].get('bdc:size', None),
+                "bdc:chunk_size": json_data['assets']['EVI'].get('bdc:chunk_size', None),
+                "bdc:raster_size": json_data['assets']['EVI'].get('bdc:raster_size', None),
+                "checksum:multihash": json_data['assets']['EVI'].get('checksum:multihash', None)
             },
             "thumbnail": {
                 "href": json_data['assets']['thumbnail'].get('href', None),
