@@ -2,7 +2,9 @@ from firebase import db
 from flask import jsonify
 
 def transformar_coordenadas(coordenadas):
-    # Ordena as coordenadas pela chave (coordinate1, coordinate2, ...)
+    # Verifica se coordenadas é None
+    if coordenadas is None:  
+        return []  
     ordered_keys = sorted(coordenadas.keys())
     # Converte para uma lista de listas em ordem
     return [[coordenadas[key]["longitude"], coordenadas[key]["latitude"]] for key in ordered_keys]
@@ -15,13 +17,17 @@ def get_historico(id_usuario):
     for doc in documentos:
         item = doc.to_dict()
 
-        # Transforma "geometry" se existir
+        # Transforma "geometry" se existir e tem coordenadas válidas
         if "geometry" in item and "coordinates" in item["geometry"]:
-            item["geometry"]["coordinates"] = [transformar_coordenadas(item["geometry"]["coordinates"])]
+            coordinates = item["geometry"]["coordinates"]
+            if coordinates is not None:  # Verifica se não é None
+                item["geometry"]["coordinates"] = [transformar_coordenadas(coordinates)]
 
-        # Transforma "user_geometry" se existir
+        # Transforma "user_geometry" se existir e tem coordenadas válidas
         if "user_geometry" in item and "coordinates" in item["user_geometry"]:
-            item["user_geometry"]["coordinates"] = [transformar_coordenadas(item["user_geometry"]["coordinates"])]
+            user_coordinates = item["user_geometry"]["coordinates"]
+            if user_coordinates is not None:  # Verifica se não é None
+                item["user_geometry"]["coordinates"] = [transformar_coordenadas(user_coordinates)]
 
         historico.append(item)
 
