@@ -5,7 +5,7 @@ def delete_image(id_imagem, id_usuario):
     collection_ref = db.collection("historico_imagens_ia")
 
     # Recupera o documento que tem o campo "id_imagem" e "id_usuario" igual ao fornecido
-    documentos = collection_ref.where("id_imagem", "==", id_imagem).where("id_usuario", "==", id_usuario).stream()
+    documentos = collection_ref.where("id", "==", id_imagem).where("id_usuario", "==", id_usuario).stream()
 
     doc_to_delete = None
     for doc in documentos:
