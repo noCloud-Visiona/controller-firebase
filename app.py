@@ -83,10 +83,6 @@ def salvar_thumbnail_sem_nuvem():
 def salvar_thumbnail_sem_sombra():
     return upload_thumbnail_sem_sombra()
 
-@app.route('/upload_thumbnail_imagem_original', methods=['POST'])
-def salvar_thumbnail_imagem_original():
-    return upload_thumbnail_imagem_original()
-
 @app.route('/upload_thumbnail_nuvem', methods=['POST'])
 def salvar_thumbnail_nuvem():
     return upload_thumbnail_nuvem()
@@ -94,6 +90,10 @@ def salvar_thumbnail_nuvem():
 @app.route('/upload_thumbnail_sombra', methods=['POST'])
 def salvar_thumbnail_sombra():
     return upload_thumbnail_sombra()
+
+@app.route('/upload_thumbnail_imagem_original', methods=['POST'])
+def salvar_thumbnail_imagem_original():
+    return upload_thumbnail_imagem_original()
 
 ###### Máscaras nuvem e sombra
 

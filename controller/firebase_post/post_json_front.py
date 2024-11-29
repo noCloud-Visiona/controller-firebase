@@ -90,21 +90,29 @@ def post_json_front():
         },
         "user_geometry": transformed_user_geometry,
         "identificacao_ia": {
-            "id": id_imagem_final,
-            "area_visivel_mapa": json_data['identificacao_ia'].get('area_visivel_mapa', None),
-            "percentual_nuvem": json_data['identificacao_ia'].get('percentual_nuvem', None),
-            "percentual_sombra_nuvem": None,
-            "img_original_png": json_data['identificacao_ia'].get('img_original_png', None),
-            "img_original_tiff": json_data['identificacao_ia'].get('img_original_tiff', None),
-            "img_tratada": json_data['identificacao_ia'].get('img_tratada', None),
-            "mask_nuvem": json_data['identificacao_ia'].get('mask_nuvem', None),
-            "mask_sombra": None,
-            "tiff_tratado": None,
-            "resolucao_imagem_png": json_data['identificacao_ia'].get('resolucao_imagem_png', None),
-            "resolucao_imagem_tiff": None,
-            "bbox": json_data['identificacao_ia'].get('bbox', None)
-        }
+        "id": id_imagem_final,
+        "area_visivel_mapa": json_data['identificacao_ia'].get('area_visivel_mapa', None),
+        "percentual_nuvem": json_data['identificacao_ia'].get('percentual_nuvem', None),
+        "percentual_sombra_nuvem": None,
+        "img_original_png": json_data['identificacao_ia'].get('img_original_png', None),
+        "img_original_tiff": json_data['identificacao_ia'].get('img_original_tiff', None),
+        "img_tratada": json_data['identificacao_ia'].get('img_tratada', None),
+        "mask_nuvem": json_data['identificacao_ia'].get('mask_nuvem', None),
+        "mask_sombra": None,
+        "resolucao_imagem_png": json_data['identificacao_ia'].get('resolucao_imagem_png', None),
+        "resolucao_imagem_tiff": None,
+        "bbox": json_data['identificacao_ia'].get('bbox', None),
+        "imagem_sem_nuvem_url": json_data['identificacao_ia'].get('imagem_sem_nuvem_url', None),
+        "imagem_sem_sombra_url": json_data['identificacao_ia'].get('imagem_sem_sombra_url', None),
+        "imagem_nuvem_url": json_data['identificacao_ia'].get('imagem_nuvem_url', None),
+        "imagem_sombra_url": json_data['identificacao_ia'].get('imagem_sombra_url', None),
+        "thumbnail_sem_nuvem_url": json_data['identificacao_ia'].get('thumbnail_sem_nuvem_url', None),
+        "thumbnail_sem_sombra_url": json_data['identificacao_ia'].get('thumbnail_sem_sombra_url', None),
+        "thumbnail_nuvem_url": json_data['identificacao_ia'].get('thumbnail_nuvem_url', None),
+        "thumbnail_sombra_url": json_data['identificacao_ia'].get('thumbnail_sombra_url', None),
+        "thumbnail_imagem_url": json_data['identificacao_ia'].get('thumbnail_imagem_url', None)
     }
+}
 
     jsonFinalResposta = {
         "type": json_data.get('type', None),
@@ -155,21 +163,29 @@ def post_json_front():
         },
         "user_geometry": json_data["user_geometry"],
         "identificacao_ia": {
-            "id": id_imagem_final,
-            "area_visivel_mapa": json_data['identificacao_ia'].get('area_visivel_mapa', None),
-            "percentual_nuvem": json_data['identificacao_ia'].get('percentual_nuvem', None),
-            "percentual_sombra_nuvem": None,
-            "img_original_png": json_data['identificacao_ia'].get('img_original_png', None),
-            "img_original_tiff": json_data['identificacao_ia'].get('img_original_tiff', None),
-            "img_tratada": json_data['identificacao_ia'].get('img_tratada', None),
-            "mask_nuvem": json_data['identificacao_ia'].get('mask_nuvem', None),
-            "mask_sombra": None,
-            "tiff_tratado": None,
-            "resolucao_imagem_png": json_data['identificacao_ia'].get('resolucao_imagem_png', None),
-            "resolucao_imagem_tiff": None,
-            "bbox": json_data['identificacao_ia'].get('bbox', None)
-        }
+        "id": id_imagem_final,
+        "area_visivel_mapa": json_data['identificacao_ia'].get('area_visivel_mapa', None),
+        "percentual_nuvem": json_data['identificacao_ia'].get('percentual_nuvem', None),
+        "percentual_sombra_nuvem": None,
+        "img_original_png": json_data['identificacao_ia'].get('img_original_png', None),
+        "img_original_tiff": json_data['identificacao_ia'].get('img_original_tiff', None),
+        "img_tratada": json_data['identificacao_ia'].get('img_tratada', None),
+        "mask_nuvem": json_data['identificacao_ia'].get('mask_nuvem', None),
+        "mask_sombra": None,
+        "resolucao_imagem_png": json_data['identificacao_ia'].get('resolucao_imagem_png', None),
+        "resolucao_imagem_tiff": None,
+        "bbox": json_data['identificacao_ia'].get('bbox', None),
+        "imagem_sem_nuvem_url": json_data['identificacao_ia'].get('imagem_sem_nuvem_url', None),
+        "imagem_sem_sombra_url": json_data['identificacao_ia'].get('imagem_sem_sombra_url', None),
+        "imagem_nuvem_url": json_data['identificacao_ia'].get('imagem_nuvem_url', None),
+        "imagem_sombra_url": json_data['identificacao_ia'].get('imagem_sombra_url', None),
+        "thumbnail_sem_nuvem_url": json_data['identificacao_ia'].get('thumbnail_sem_nuvem_url', None),
+        "thumbnail_sem_sombra_url": json_data['identificacao_ia'].get('thumbnail_sem_sombra_url', None),
+        "thumbnail_nuvem_url": json_data['identificacao_ia'].get('thumbnail_nuvem_url', None),
+        "thumbnail_sombra_url": json_data['identificacao_ia'].get('thumbnail_sombra_url', None),
+        "thumbnail_imagem_url": json_data['identificacao_ia'].get('thumbnail_imagem_url', None)
     }
+}
 
     # Adiciona o JSON final à coleção no Firestore
     collection_ref.add(jsonFinal)
