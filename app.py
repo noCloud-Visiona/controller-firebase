@@ -4,6 +4,7 @@ from flask_cors import CORS
 # GET
 from controller.firebase_gets.historico_by_id import get_historico
 from controller.firebase_gets.imagem_by_id import get_image
+from controller.firebase_gets.pega_job_id import get_job_id
 
 # POST
 from controller.firebase_post.post_imagem_original_png import upload_image_original
@@ -11,6 +12,7 @@ from controller.firebase_post.post_imagem_tratada_png import upload_image_tratad
 from controller.firebase_post.post_mask_nuvem import upload_image_nuvem
 from controller.firebase_post.post_json_front import post_json_front
 from controller.firebase_post.post_uma_imagem_qualquer import upload_uma_imagem_qualquer
+from controller.firebase_post.post_job_id import post_job_id
 
 # DELETE
 from controller.firebase_delete.delete_de_imagem import delete_image
@@ -23,6 +25,11 @@ CORS(app)
 
 ########## Rotas de Get #########
 
+# Retorna o job_id de um determinado processamento
+@app.route('/get_job_id/<id_usuario>/job_id', methods=['GET'])
+def pega_job_id(id_usuario, job_id):
+    return get_job_id(id_usuario, job_id)
+
 # Retorna todos os documentos/jsons de um usuário especifico
 @app.route('/historico/<id_usuario>', methods=['GET'])
 def historico_usuario(id_usuario):
@@ -34,6 +41,10 @@ def pega_imagem(id_imagem, id_usuario):
     return get_image(id_imagem, id_usuario)
 
 ########## Rotas de Post #########
+
+@app.route('/post_job_id/<id_usuario>/job_id', methods=['POST'])
+def salva_job_id(id_usuario, job_id):
+    return post_job_id(id_usuario, job_id)
 
 # Salva o json do frontend completo no firebase
 @app.route('/post_json', methods=['POST'])
