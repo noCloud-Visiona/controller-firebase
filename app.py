@@ -107,7 +107,7 @@ def salvar_mask_sombra():
     return upload_mask_sombra()
 
 @app.route('/upload_image_nuvem_png', methods=['POST'])
-def salvar_imagem_nuvem():
+def salvar_imagem_nuvem_antigo():
     return upload_mask_nuvem()
 
 ##### Imagem original e tratada antiga
