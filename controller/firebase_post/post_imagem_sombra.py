@@ -2,6 +2,9 @@ from firebase import db, bucket
 from flask import jsonify, request
 
 def get_next_available_filename(full_filename, folder):
+    """
+    Gera o próximo nome de arquivo disponível no bucket.
+    """
     # Obtém a lista de blobs no bucket no diretório específico
     blobs = bucket.list_blobs(prefix=f'{folder}/')
     
@@ -23,27 +26,29 @@ def get_next_available_filename(full_filename, folder):
             new_filename = f'{base_name}_{i}.{extension}'
         return new_filename
 
-def upload_mask_nuvem():
+def upload_imagem_sombra():
+    """
+    Faz o upload de uma imagem de sombra para o Firebase e retorna a URL pública.
+    """
     # Verifica se as imagens estão presentes na requisição
-    if 'nuvem' not in request.files:
-        return jsonify({"error": "A mask 'nuvem' é necessária."}), 400
+    if 'imagem_sombra' not in request.files:
+        return jsonify({"error": "A imagem 'imagem_sombra' é necessária."}), 400
 
-    nuvem_image = request.files['nuvem']
-    mime_type = nuvem_image.content_type or 'image/png'
+    sombra_image = request.files['imagem_sombra']
+    mime_type = sombra_image.content_type or 'image/png'
     
     # Verifica se já existe uma imagem com o mesmo nome e gera o próximo nome disponível
-    available_name = get_next_available_filename(nuvem_image.filename, 'imagens/nuvem')
+    available_name = get_next_available_filename(sombra_image.filename, 'imagens/sombra')
     
-    mime_type = nuvem_image.content_type or 'image/png'
-    nuvem_blob = bucket.blob(f'imagens/mask_nuvem/{available_name}')
-    nuvem_blob.upload_from_file(nuvem_image, content_type=mime_type)
-    nuvem_blob.make_public()
+    sombra_blob = bucket.blob(f'imagens/sombra/{available_name}')
+    sombra_blob.upload_from_file(sombra_image, content_type=mime_type)
+    sombra_blob.make_public()
 
     # Gera a URL da imagem
-    nuvem_url = nuvem_blob.public_url
+    sombra_url = sombra_blob.public_url
 
-    print(nuvem_url)
+    print(sombra_url)
 
     return jsonify({
-        "nuvem_url": nuvem_url,
+        "imagem_sombra_url": sombra_url,
     })

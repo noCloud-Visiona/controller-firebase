@@ -8,9 +8,20 @@ from controller.firebase_gets.imagem_by_id import get_image
 # POST
 from controller.firebase_post.post_imagem_original_png import upload_image_original
 from controller.firebase_post.post_imagem_tratada_png import upload_image_tratada
-from controller.firebase_post.post_mask_nuvem import upload_image_nuvem
+from controller.firebase_post.post_mask_nuvem import upload_mask_nuvem
+from controller.firebase_post.post_mask_sombra import upload_mask_sombra
+from controller.firebase_post.post_imagem_sem_nuvem import upload_imagem_sem_nuvem
+from controller.firebase_post.post_imagem_sem_sombra import upload_imagem_sem_sombra
+from controller.firebase_post.post_imagem_nuvem import upload_imagem_nuvem
+from controller.firebase_post.post_imagem_sombra import upload_imagem_sombra
+from controller.firebase_post.post_thumbnail_sem_nuvem import upload_thumbnail_sem_nuvem
+from controller.firebase_post.post_thumbnail_sem_sombra import upload_thumbnail_sem_sombra
+from controller.firebase_post.post_thumbnail_imagem_original import upload_thumbnail_imagem_original
+from controller.firebase_post.post_thumbnail_nuvem import upload_thumbnail_nuvem
+from controller.firebase_post.post_thumbnail_sombra import upload_thumbnail_sombra
 from controller.firebase_post.post_json_front import post_json_front
 from controller.firebase_post.post_uma_imagem_qualquer import upload_uma_imagem_qualquer
+
 
 # DELETE
 from controller.firebase_delete.delete_de_imagem import delete_image
@@ -21,7 +32,9 @@ from controller.firebase_rotas_especiais.converte_de_volta_imagem_json import tr
 app = Flask(__name__)
 CORS(app)
 
-########## Rotas de Get #########
+######################################################
+################### Rotas de Get #####################
+######################################################
 
 # Retorna todos os documentos/jsons de um usuário especifico
 @app.route('/historico/<id_usuario>', methods=['GET'])
@@ -33,13 +46,72 @@ def historico_usuario(id_usuario):
 def pega_imagem(id_imagem, id_usuario):
     return get_image(id_imagem, id_usuario)
 
-########## Rotas de Post #########
+######################################################
+################### Rotas de Post #################### 
+######################################################
 
 # Salva o json do frontend completo no firebase
 @app.route('/post_json', methods=['POST'])
 def salva_json_do_usuario():
     return post_json_front()
-    
+
+###### Imagens de sombra e nuvem com e sem na imagem
+
+@app.route('/upload_imagem_sem_nuvem', methods=['POST'])
+def salvar_imagem_sem_nuvem():
+    return upload_imagem_sem_nuvem()
+
+@app.route('/upload_imagem_sem_sombra', methods=['POST'])
+def salvar_imagem_sem_sombra():
+    return upload_imagem_sem_sombra()
+
+@app.route('/upload_imagem_nuvem', methods=['POST'])
+def salvar_imagem_nuvem():
+    return upload_imagem_nuvem()
+
+@app.route('/upload_imagem_sombra', methods=['POST'])
+def salvar_imagem_sombra():
+    return upload_imagem_sombra()
+
+###### Thumbnails ######
+
+@app.route('/upload_thumbnail_sem_nuvem', methods=['POST'])
+def salvar_thumbnail_sem_nuvem():
+    return upload_thumbnail_sem_nuvem()
+
+@app.route('/upload_thumbnail_sem_sombra', methods=['POST'])
+def salvar_thumbnail_sem_sombra():
+    return upload_thumbnail_sem_sombra()
+
+@app.route('/upload_thumbnail_imagem_original', methods=['POST'])
+def salvar_thumbnail_imagem_original():
+    return upload_thumbnail_imagem_original()
+
+@app.route('/upload_thumbnail_nuvem', methods=['POST'])
+def salvar_thumbnail_nuvem():
+    return upload_thumbnail_nuvem()
+
+@app.route('/upload_thumbnail_sombra', methods=['POST'])
+def salvar_thumbnail_sombra():
+    return upload_thumbnail_sombra()
+
+###### Máscaras nuvem e sombra
+
+# Salva e retorna a URL da mask "nuvem" no bucket
+@app.route('/upload_mask_nuvem', methods=['POST'])
+def salvar_mask_nuvem():
+    return upload_mask_nuvem()
+
+@app.route('/upload_mask_sombra', methods=['POST'])
+def salvar_mask_sombra():
+    return upload_mask_sombra()
+
+@app.route('/upload_image_nuvem_png', methods=['POST'])
+def salvar_imagem_nuvem():
+    return upload_mask_nuvem()
+
+##### Imagem original e tratada antiga
+
 # Salva e retorna a URL da imagem "original" no bucket
 @app.route('/upload_image_original_png', methods=['POST'])
 def salvar_imagem_original():
@@ -50,24 +122,25 @@ def salvar_imagem_original():
 def salvar_imagem_tratada():
     return upload_image_tratada()
 
-# Salva e retorna a URL da mask "nuvem" no bucket
-@app.route('/upload_image_nuvem_png', methods=['POST'])
-def salvar_imagem_nuvem():
-    return upload_image_nuvem()
+###### Salvar qualquer coisa
 
 # Caso queira salvar alguma imagem não relacionada ao fluxo padrão no Bucket pra usar a URL dela
 @app.route('/upload_de_uma_imagem_qualquer', methods=['POST'])
 def salva_uma_imagem():
     return upload_uma_imagem_qualquer()
 
-########## Rotas de Delete #########
+######################################################
+################### Rotas de Delete ##################
+######################################################
 
 # Deleta uma imagem especifica de um usuário
 @app.route('/delete_image/<id_imagem>/<id_usuario>', methods=['DELETE'])
 def deletar_imagem(id_imagem, id_usuario):
     return delete_image(id_imagem, id_usuario)
 
-######### Rotas Especiais ##########
+######################################################
+################### Rotas Especiais ##################
+######################################################
 
 # Transforma imagens em base64 de volta para imagem normal
 @app.route('/show_image', methods=['POST'])

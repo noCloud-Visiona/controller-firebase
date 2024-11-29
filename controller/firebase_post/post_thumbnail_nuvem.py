@@ -2,6 +2,9 @@ from firebase import db, bucket
 from flask import jsonify, request
 
 def get_next_available_filename(full_filename, folder):
+    """
+    Gera o próximo nome de arquivo disponível no bucket.
+    """
     # Obtém a lista de blobs no bucket no diretório específico
     blobs = bucket.list_blobs(prefix=f'{folder}/')
     
@@ -23,27 +26,29 @@ def get_next_available_filename(full_filename, folder):
             new_filename = f'{base_name}_{i}.{extension}'
         return new_filename
 
-def upload_mask_nuvem():
-    # Verifica se as imagens estão presentes na requisição
-    if 'nuvem' not in request.files:
-        return jsonify({"error": "A mask 'nuvem' é necessária."}), 400
+def upload_thumbnail_nuvem():
+    """
+    Faz o upload de um thumbnail de nuvem para o Firebase e retorna a URL pública.
+    """
+    # Verifica se o arquivo está presente na requisição
+    if 'thumbnail_nuvem' not in request.files:
+        return jsonify({"error": "O thumbnail 'thumbnail_nuvem' é necessário."}), 400
 
-    nuvem_image = request.files['nuvem']
-    mime_type = nuvem_image.content_type or 'image/png'
+    thumbnail_image = request.files['thumbnail_nuvem']
+    mime_type = thumbnail_image.content_type or 'image/png'
     
-    # Verifica se já existe uma imagem com o mesmo nome e gera o próximo nome disponível
-    available_name = get_next_available_filename(nuvem_image.filename, 'imagens/nuvem')
+    # Verifica se já existe um arquivo com o mesmo nome e gera o próximo nome disponível
+    available_name = get_next_available_filename(thumbnail_image.filename, 'thumbnails/nuvem')
     
-    mime_type = nuvem_image.content_type or 'image/png'
-    nuvem_blob = bucket.blob(f'imagens/mask_nuvem/{available_name}')
-    nuvem_blob.upload_from_file(nuvem_image, content_type=mime_type)
-    nuvem_blob.make_public()
+    thumbnail_blob = bucket.blob(f'thumbnails/nuvem/{available_name}')
+    thumbnail_blob.upload_from_file(thumbnail_image, content_type=mime_type)
+    thumbnail_blob.make_public()
 
-    # Gera a URL da imagem
-    nuvem_url = nuvem_blob.public_url
+    # Gera a URL do thumbnail
+    thumbnail_url = thumbnail_blob.public_url
 
-    print(nuvem_url)
+    print(thumbnail_url)
 
     return jsonify({
-        "nuvem_url": nuvem_url,
+        "thumbnail_nuvem_url": thumbnail_url,
     })
