@@ -39,7 +39,7 @@ CORS(app)
 ######################################################
 
 # Retorna o job_id de um determinado processamento
-@app.route('/get_job_id/<id_usuario>/job_id', methods=['GET'])
+@app.route('/get_job_id/<id_usuario>/<job_id>', methods=['GET'])
 def pega_job_id(id_usuario, job_id):
     return get_job_id(id_usuario, job_id)
 
@@ -57,7 +57,7 @@ def pega_imagem(id_imagem, id_usuario):
 ################### Rotas de Post #################### 
 ######################################################
 
-@app.route('/post_job_id/<id_usuario>/job_id', methods=['POST'])
+@app.route('/post_job_id/<id_usuario>/<job_id>', methods=['POST'])
 def salva_job_id(id_usuario, job_id):
     return post_job_id(id_usuario, job_id)
 
