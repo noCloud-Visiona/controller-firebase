@@ -2,6 +2,9 @@ from firebase import db, bucket
 from flask import jsonify, request
 
 def get_next_available_filename(full_filename, folder):
+    """
+    Gera o próximo nome de arquivo disponível no bucket.
+    """
     # Obtém a lista de blobs no bucket no diretório específico
     blobs = bucket.list_blobs(prefix=f'{folder}/')
     
@@ -23,27 +26,29 @@ def get_next_available_filename(full_filename, folder):
             new_filename = f'{base_name}_{i}.{extension}'
         return new_filename
 
-def upload_mask_nuvem():
-    # Verifica se as imagens estão presentes na requisição
-    if 'nuvem' not in request.files:
-        return jsonify({"error": "A mask 'nuvem' é necessária."}), 400
+def upload_mask_sombra():
+    """
+    Faz o upload de uma máscara de sombra para o Firebase e retorna a URL pública.
+    """
+    # Verifica se o arquivo está presente na requisição
+    if 'mask_sombra' not in request.files:
+        return jsonify({"error": "A máscara 'mask_sombra' é necessária."}), 400
 
-    nuvem_image = request.files['nuvem']
-    mime_type = nuvem_image.content_type or 'image/png'
+    mask_image = request.files['mask_sombra']
+    mime_type = mask_image.content_type or 'image/png'
     
-    # Verifica se já existe uma imagem com o mesmo nome e gera o próximo nome disponível
-    available_name = get_next_available_filename(nuvem_image.filename, 'imagens/nuvem')
+    # Verifica se já existe um arquivo com o mesmo nome e gera o próximo nome disponível
+    available_name = get_next_available_filename(mask_image.filename, 'masks/sombra')
     
-    mime_type = nuvem_image.content_type or 'image/png'
-    nuvem_blob = bucket.blob(f'imagens/mask_nuvem/{available_name}')
-    nuvem_blob.upload_from_file(nuvem_image, content_type=mime_type)
-    nuvem_blob.make_public()
+    mask_blob = bucket.blob(f'masks/sombra/{available_name}')
+    mask_blob.upload_from_file(mask_image, content_type=mime_type)
+    mask_blob.make_public()
 
-    # Gera a URL da imagem
-    nuvem_url = nuvem_blob.public_url
+    # Gera a URL da máscara
+    mask_url = mask_blob.public_url
 
-    print(nuvem_url)
+    print(mask_url)
 
     return jsonify({
-        "nuvem_url": nuvem_url,
+        "mask_sombra_url": mask_url,
     })
