@@ -5,6 +5,7 @@ from flask_cors import CORS
 from controller.firebase_gets.historico_by_id import get_historico
 from controller.firebase_gets.imagem_by_id import get_image
 from controller.firebase_gets.pega_job_id import get_job_id
+from controller.firebase_gets.pega_todos_jobs_id import get_todos_jobs_id
 
 # POST
 from controller.firebase_post.post_imagem_original_png import upload_image_original
@@ -42,6 +43,11 @@ CORS(app)
 @app.route('/get_job_id/<id_usuario>/<job_id>', methods=['GET'])
 def pega_job_id(id_usuario, job_id):
     return get_job_id(id_usuario, job_id)
+
+# Retorna o job_id de um determinado processamento
+@app.route('/get_todos_jobs_id/<id_usuario>', methods=['GET'])
+def pega_todos_jobs_id(id_usuario):
+    return get_todos_jobs_id(id_usuario)
 
 # Retorna todos os documentos/jsons de um usuário especifico
 @app.route('/historico/<id_usuario>', methods=['GET'])
